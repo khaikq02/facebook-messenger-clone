@@ -1,10 +1,17 @@
 import { Button } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
+import { FormControl, InputLabel, Input } from "@mui/material";
+import Message from "./components/Message/Index";
 
 function App() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    setUserName(prompt("Please enter your name: "));
+  }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -14,13 +21,17 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Hello Wiliam Kieu!</h1>
+      <h1>Hello {userName}!</h1>
 
       <form>
-        <input
-          value={input}
-          onChange={(event) => setInput(event.target.value)}
-        />
+        <FormControl>
+          <InputLabel>Enter a message...</InputLabel>
+          <Input
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+          />
+        </FormControl>
+
         <Button
           disabled={!input}
           variant="contained"
@@ -32,11 +43,9 @@ function App() {
         </Button>
       </form>
 
-      <ul>
-        {messages.map((mess) => (
-          <li>{mess}</li>
-        ))}
-      </ul>
+      {messages.map((message) => (
+        <Message text={message} />
+      ))}
     </div>
   );
 }
