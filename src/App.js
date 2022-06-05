@@ -6,7 +6,10 @@ import Message from "./components/Message/Index";
 
 function App() {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    { userName: "khai", text: "Hello" },
+    { userName: "wiliam", text: "hi" },
+  ]);
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -15,13 +18,13 @@ function App() {
 
   const sendMessage = (event) => {
     event.preventDefault();
-    setMessages([...messages, input]);
+    setMessages([...messages, { userName: userName, text: input }]);
     setInput("");
   };
 
   return (
     <div className="App">
-      <h1>Hello {userName}!</h1>
+      <h1>Hello {userName}</h1>
 
       <form>
         <FormControl>
@@ -44,7 +47,7 @@ function App() {
       </form>
 
       {messages.map((message) => (
-        <Message text={message} />
+        <Message userName={userName} message={message} />
       ))}
     </div>
   );
